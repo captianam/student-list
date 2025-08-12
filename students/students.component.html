@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="controls">
+    <input placeholder="Search by name" [(ngModel)]="searchText" />
+  </div>
+
+  <form class="student-form" (ngSubmit)="saveStudent(); $event.preventDefault();">
+    <input type="text" placeholder="Name" [(ngModel)]="name" name="name" />
+    <input type="number" placeholder="Roll number" [(ngModel)]="roll" name="roll" />
+    <input type="text" placeholder="Class" [(ngModel)]="className" name="className" />
+    <div class="form-actions">
+      <button type="submit">{{ editIndex !== null ? 'Save' : 'Add' }} Student</button>
+      <button type="button" (click)="clearForm()">Clear</button>
+    </div>
+  </form>
+
+  <table class="students-table" *ngIf="filteredStudents.length > 0; else emptyList">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Roll</th>
+        <th>Class</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of filteredStudents; let i = index">
+        <td>{{ s.name }}</td>
+        <td>{{ s.roll }}</td>
+        <td>{{ s.className }}</td>
+        <td class="actions">
+          <button (click)="startEdit(i)">Edit</button>
+          <button (click)="removeStudent(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #emptyList>
+    <p class="empty">No students yet. Add some using the form above.</p>
+  </ng-template>
+</div>
